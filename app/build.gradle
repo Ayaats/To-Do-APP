@@ -5,19 +5,29 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+
 android {
-    compileSdk 32
+
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.example.to_doapp"
-        minSdk 21
-        targetSdk 32
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    configurations {
+        cleanedAnnotations
+        compile.exclude group: 'org.jetbrains' , module:'annotations'
+    }
+//    configurations.all {
+//        resolutionStrategy {
+//            failOnVersionConflict()
+//        }
+//    }
     buildTypes {
         release {
             minifyEnabled false
@@ -37,13 +47,13 @@ android {
 }
 
 dependencies {
-
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.room:room-common:2.5.2'
-    implementation 'androidx.room:room-compiler:2.5.2'
+    annotationProcessor 'androidx.room:room-compiler:2.4.0-beta01'
     implementation 'androidx.room:room-ktx:2.5.2'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
