@@ -4,7 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+       <variable
+       name="taskEntry"
+       type="com.example.to_doapp.database.TaskEntry" />
+        <variable
+            name="clickListener"
+            type="com.example.to_doapp.ui.task.TaskClickListener" />
+       
     </data>
 
     <androidx.cardview.widget.CardView
@@ -12,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
+        app:cardElevation="4dp"
+        android:onClick="@{()-> clickListener.onClick(taskEntry)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/row_background"
@@ -26,11 +33,12 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Title"
+                tools:text="Title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{taskEntry.title}"/>
 
             <TextView
                 android:id="@+id/task_priorty"
@@ -39,11 +47,13 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="High"
+                tools:text="High"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/task_title" />
+                app:layout_constraintTop_toBottomOf="@+id/task_title"
+                setPriority="@{taskEntry.priority}"
+                />
 
             <TextView
                 android:id="@+id/task_timestamp"
@@ -53,13 +63,14 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="Timestamp"
+                tools:text="Timestamp"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/task_priorty"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                setTimestamp="@{taskEntry.timestamp}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

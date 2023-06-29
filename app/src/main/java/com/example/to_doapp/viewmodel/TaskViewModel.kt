@@ -12,14 +12,9 @@ import kotlinx.coroutines.launch
 
 class TaskViewModel(application: Application) : AndroidViewModel(application){
   private val taskDao= TaskDatabase.getDatabase(application).taskDao()
-  private val repository :  TaskRepo
-  val getAllTasks : LiveData<List<TaskEntry>>
-  init {
-      repository = TaskRepo(taskDao)
-      getAllTasks = repository.getAllTasks()
-  }
-
-  fun insert(taskEntry: TaskEntry) {
+  private val repository :  TaskRepo = TaskRepo(taskDao)
+    val getAllTasks = repository.getAllTasks()
+    fun insert(taskEntry: TaskEntry) {
       viewModelScope.launch(Dispatchers.IO) {
           repository.insert(taskEntry)
       }
@@ -34,7 +29,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
             repository.updateData(taskEntry)
         }
   }
-    fun delateAll(){
+    fun deleteAll(){
         viewModelScope.launch(Dispatchers.IO){
             repository.deleteAll()
         }

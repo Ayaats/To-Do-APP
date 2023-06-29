@@ -14,5 +14,10 @@ class TaskRepo(val taskDao: TaskDao) {
 
     suspend fun deleteAll(){ taskDao.deleteAll() }
 
-    fun getAllTasks(): LiveData<List<TaskEntry>> = taskDao.getAllTasks()
+    fun getAllTasks() = taskDao.getAllTasks()
+    fun getAllPriorityTasks() = taskDao.getAllPriorityTasks()
+
+    fun searchDatabase(searchQuery: String): LiveData<List<TaskEntry>> {
+        return taskDao.searchDatabase(searchQuery)
+    }
 }

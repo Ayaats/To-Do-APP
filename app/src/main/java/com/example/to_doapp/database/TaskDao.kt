@@ -1,10 +1,13 @@
 package com.example.to_doapp.database
 
+
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
+
     @Insert
     suspend fun insert(taskEntry: TaskEntry)
 
@@ -17,6 +20,12 @@ interface TaskDao {
     @Query("DELETE FROM task_table")
     suspend fun deleteAll()
 
-    @Query("SELECT * FROM task_table ORDERED BY timestamp DESC")
-    fun getAllTasks(): LiveData<List<TaskEntry>>
+    @Query("SELECT * FROM task_table ORDER BY timestamp DESC")
+    fun getAllTasks(): Flow<List<TaskEntry>>
+
+    @Query("SELECT * FROM task_table ORDER BY priority ASC")
+    fun getAllPriorityTasks(): Flow<List<TaskEntry>>
+
+    @Query("SELECT * FROM task_table WHERE title LIKE :searchQuery ORDER BY timestamp DESC")
+    fun searchDatabase(searchQuery: String): LiveData<List<TaskEntry>>
 }
